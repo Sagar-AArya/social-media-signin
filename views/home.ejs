@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Google Auth Demo</title>
+
+  <meta name="google-signin-client_id" content="<%= googleClientId %>">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script>
+        function onSignIn(googleUser) {
+            let userDetails = googleUser.getBasicProfile();
+            const url = "http://localhost:5999/auth/google";
+            let data = JSON.stringify(userDetails);
+
+            fetch(url, {
+                method: "POST",
+                body: data,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+            // get user profile information
+            console.log(googleUser.getBasicProfile());
+        }
+  </script>
+</head>
+<body>
+  <h1>Welcome to the Demo</h1>
+
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+</body>
+</html>
